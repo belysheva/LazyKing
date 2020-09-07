@@ -11,6 +11,10 @@ public class MyStatusTreeNode<T> implements IStatusTreeNode<T> {
     private final Map<T, IStatusTreeNode<T>> children = new TreeMap<>();
     private IStatusTreeNode<T> parent;
 
+    public MyStatusTreeNode(T data) {
+        this.data = data;
+    }
+
     public MyStatusTreeNode(T data, IStatusTreeNode<T> parent) {
         this.data = data;
         this.parent = parent;

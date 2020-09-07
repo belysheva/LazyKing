@@ -18,7 +18,7 @@ public class LazyKing {
             "дворянин Кузькин: управляющий Семен Семеныч, жена Кузькина, экономка Лидия Федоровна",
             "просветленный Антон"
     );
-    static IStatusTreeNode<String> rootNode = new MyStatusTreeNode<>("король", null);
+    static IStatusTreeNode<String> rootNode = new MyStatusTreeNode<>("король");
 
     public static void main(String[] args) {
         IUnluckyVassalService<String> unluckyVassal = new UnluckyVassal();
