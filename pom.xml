@@ -15,7 +15,6 @@
             <version>${org.junit.jupiter}</version>
             <scope>test</scope>
         </dependency>
-
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -23,11 +22,9 @@
             <version>${lombok}</version>
             <scope>provided</scope>
         </dependency>
-
     </dependencies>
     <build>
         <!-- https://mvnrepository.com/artifact/junit/junit -->
-
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -40,7 +37,6 @@
         </plugins>
     </build>
     <properties>
-
         <lombok>1.18.12</lombok>
         <org.junit.jupiter>5.6.2</org.junit.jupiter>
     </properties>
