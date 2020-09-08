@@ -51,6 +51,7 @@ public class StatusTree {
         }
         return null;
     }
-
-    public IStatusTreeNode<String> getRootNode() { return rootNode; }
+    public IStatusTreeNode<String> getOrganizedNodes(List<String> pollList) {
+        organizeNodes(pollList);
+        return rootNode; }
 }
