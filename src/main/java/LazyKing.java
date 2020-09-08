@@ -21,33 +21,38 @@ public class LazyKing {
     static IStatusTreeNode<String> rootNode = new MyStatusTreeNode<>("король");
 
     public static void main(String[] args) {
-        IUnluckyVassalService<String> unluckyVassal = new UnluckyVassal();
-        unluckyVassal.printReportForKing(rootNode, pollResults);
+        IUnluckyVassalService<String> unluckyVassal = new UnluckyVassal(rootNode);
+        unluckyVassal.printReportForKing(pollResults);
     }
 }
 
 class UnluckyVassal implements IUnluckyVassalService<String> {
+    private IStatusTreeNode<String> rootNode;
+
+    public UnluckyVassal(IStatusTreeNode<String> rootNode) {
+        this.rootNode = rootNode;
+    }
 
     @Override
-    public void printReportForKing(IStatusTreeNode<String> rootNode, List<String> pollResults) {
-        printResult(generateStatusTree(rootNode, pollResults), "\t");
+    public void printReportForKing(List<String> pollResults) {
+        generateStatusTree(pollResults);
+        printResult(this.rootNode, "\t");
     }
 
-    private IStatusTreeNode<String> generateStatusTree(IStatusTreeNode<String> rootNode, List<String> pollResults) {
+    private void generateStatusTree(List<String> pollResults) {
         pollResults.forEach(entity -> {
             String[] subVassals = prepareVassalList(entity);
-            IStatusTreeNode<String> currentNode = defineCurrentNode(rootNode, getCurrentVassalName(0, subVassals));
-            addSubVassalsToCurrentNode(rootNode, subVassals, currentNode);
+            IStatusTreeNode<String> currentNode = defineCurrentNode(getCurrentVassalName(0, subVassals));
+            addSubVassalsToCurrentNode(subVassals, currentNode);
         });
-        return rootNode;
     }
 
-    private void addSubVassalsToCurrentNode(IStatusTreeNode<String> rootNode, String[] vassals, IStatusTreeNode<String> currentNode) {
-        Stream.of(vassals).skip(1).map(String::trim).forEach(subVassal -> addVassalToCurrentNode(rootNode, currentNode, subVassal));
+    private void addSubVassalsToCurrentNode(String[] vassals, IStatusTreeNode<String> currentNode) {
+        Stream.of(vassals).skip(1).map(String::trim).forEach(subVassal -> addVassalToCurrentNode(currentNode, subVassal));
     }
 
-    private void addVassalToCurrentNode(IStatusTreeNode<String> rootNode, IStatusTreeNode<String> currentNode, String subVassalName) {
-        IStatusTreeNode<String> subVassalConnectedNode = findIfPresentConnectedNode(rootNode, subVassalName);
+    private void addVassalToCurrentNode(IStatusTreeNode<String> currentNode, String subVassalName) {
+        IStatusTreeNode<String> subVassalConnectedNode = findIfPresentConnectedNode(this.rootNode, subVassalName);
         currentNode.addChild(subVassalConnectedNode != null ? subVassalConnectedNode : newConnectedNode(currentNode, subVassalName));
     }
 
@@ -59,14 +64,14 @@ class UnluckyVassal implements IUnluckyVassalService<String> {
         return entity.split("[:,]");
     }
 
-    private IStatusTreeNode<String> defineCurrentNode(IStatusTreeNode<String> rootNode, String vassalName) {
-        IStatusTreeNode<String> connectedNode = findIfPresentConnectedNode(rootNode, vassalName);
-        return connectedNode != null ? connectedNode : newConnectedNode(rootNode, vassalName);
+    private IStatusTreeNode<String> defineCurrentNode(String vassalName) {
+        IStatusTreeNode<String> connectedNode = findIfPresentConnectedNode(this.rootNode, vassalName);
+        return connectedNode != null ? connectedNode : newConnectedNode(this.rootNode,vassalName);
     }
 
-    private IStatusTreeNode<String> newConnectedNode(IStatusTreeNode<String> rootNode, String vassalName) {
-        IStatusTreeNode<String> vassalNode = new MyStatusTreeNode<>(vassalName, rootNode);
-        rootNode.addChild(vassalNode);
+    private IStatusTreeNode<String> newConnectedNode(IStatusTreeNode<String> currentNode, String vassalName) {
+        IStatusTreeNode<String> vassalNode = new MyStatusTreeNode<>(vassalName, currentNode);
+        currentNode.addChild(vassalNode);
         return vassalNode;
     }
 

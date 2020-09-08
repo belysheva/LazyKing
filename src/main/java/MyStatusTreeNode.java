@@ -6,7 +6,6 @@ import java.util.TreeMap;
 @Data
 public class MyStatusTreeNode<T> implements IStatusTreeNode<T> {
 
-
     private final T data;
     private final Map<T, IStatusTreeNode<T>> children = new TreeMap<>();
     private IStatusTreeNode<T> parent;
