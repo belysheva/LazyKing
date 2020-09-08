@@ -4,7 +4,11 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public class StatusTree implements IStatusTree {
-    private IStatusTreeNode<String> rootNode = new MyStatusTreeNode<>("король");
+    private IStatusTreeNode<String> rootNode;
+
+    public StatusTree(IStatusTreeNode<String> rootNode) {
+        this.rootNode = rootNode;
+    }
 
     public void organizeNodes(List<String> pollResults) { pollResults.forEach(entity -> {
             String[] subVassals = prepareVassalList(entity);
