@@ -1,7 +1,9 @@
+package Tree;
+
 import java.util.List;
 import java.util.stream.Stream;
 
-public class StatusTree {
+public class StatusTree implements IStatusTree {
     private IStatusTreeNode<String> rootNode = new MyStatusTreeNode<>("король");
 
     public void organizeNodes(List<String> pollResults) { pollResults.forEach(entity -> {
@@ -51,6 +53,8 @@ public class StatusTree {
         }
         return null;
     }
+
+    @Override
     public IStatusTreeNode<String> getOrganizedNodes(List<String> pollList) {
         organizeNodes(pollList);
         return rootNode; }

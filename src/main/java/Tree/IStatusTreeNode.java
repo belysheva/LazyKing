@@ -1,3 +1,5 @@
+package Tree;
+
 import java.util.Map;
 
 public interface IStatusTreeNode<T> {

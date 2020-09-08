@@ -1,3 +1,6 @@
+package Tree;
+
+import Tree.IStatusTreeNode;
 import lombok.Data;
 
 import java.util.Map;
@@ -24,7 +27,7 @@ public class MyStatusTreeNode<T> implements IStatusTreeNode<T> {
             child.getParent().getChildren().remove(child.getData());
         }
         child.setParent(this);
-        this.children.put((T) child.getData(), child);
+        this.children.put(child.getData(), child);
     }
 
     @Override

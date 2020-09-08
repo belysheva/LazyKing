@@ -1,3 +1,7 @@
+import Tree.IStatusTree;
+import Tree.IStatusTreeNode;
+import Tree.StatusTree;
+
 import java.util.List;
 
 public class LazyKing {
@@ -19,7 +23,7 @@ public class LazyKing {
     );
 
     public static void main(String[] args) {
-        StatusTree tree = new StatusTree();
+        IStatusTree tree = new StatusTree();
         IUnluckyVassalService<String> unluckyVassal = new UnluckyVassal();
         unluckyVassal.printResult(tree.getOrganizedNodes(pollResults), "");
     }

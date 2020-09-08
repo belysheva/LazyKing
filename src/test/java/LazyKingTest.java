@@ -1,3 +1,5 @@
+import Tree.IStatusTree;
+import Tree.StatusTree;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class LazyKingTest {
 
     private static List<String> pollResults = new ArrayList<>();
-    static StatusTree tree;
+    static IStatusTree tree;
 
     @BeforeEach
     public void prepareNode() {
@@ -123,24 +125,24 @@ public class LazyKingTest {
 
         //check sorted order for 1st level vassals
         List<String> list = new ArrayList<>(tree.getOrganizedNodes(pollResults).getChildren().keySet());
-        List<String> listSorted = new ArrayList<String>(list);
+        List<String> listSorted = new ArrayList<>(list);
         listSorted.sort(Comparator.naturalOrder());
         assertEquals(listSorted, list);
 
         //check sorted order for 2st level vassals
         list = new ArrayList<>(tree.getOrganizedNodes(pollResults).getChildren().get("дворянин Кузькин").getChildren().keySet());
-        listSorted = new ArrayList<String>(list);
+        listSorted = new ArrayList<>(list);
         listSorted.sort(Comparator.naturalOrder());
         assertEquals(listSorted, list);
 
         //check sorted order for 2st level vassals
         list = new ArrayList<>(tree.getOrganizedNodes(pollResults).getChildren().get("секретарь короля").getChildren().keySet());
-        listSorted = new ArrayList<String>(list);
+        listSorted = new ArrayList<>(list);
         listSorted.sort(Comparator.naturalOrder());
 
         //check sorted order for 2st level vassals
         list = new ArrayList<>(tree.getOrganizedNodes(pollResults).getChildren().get("дворянин Кузькин").getChildren().get("управляющий Семен Семеныч").getChildren().keySet());
-        listSorted = new ArrayList<String>(list);
+        listSorted = new ArrayList<>(list);
         listSorted.sort(Comparator.naturalOrder());
 
     }
@@ -151,8 +153,8 @@ public class LazyKingTest {
         System.out.println("check that LazyKing has the most number of vassals comparing with 1st level Vassals");
         pollResults = List.of("служанка Аня", "экономка Лидия Федоровна: дворник Гена, служанка Аня", "кот Василий: человеческая особь Катя", "доярка Нюра", "дворник Гена: посыльный Тошка", "киллер Гена", "зажиточный холоп: крестьянка Таня", "шпион Т: кучер Д", "секретарь короля: зажиточный холоп, шпион Т", "посыльный Тошка: кот Василий", "аристократ Клаус", "управляющий Семен Семеныч: крестьянин Федя, доярка Нюра", "дворянин Кузькин: управляющий Семен Семеныч, жена Кузькина, экономка Лидия Федоровна", "просветленный Антон");
         Integer maxSubvassals =
-                tree.getOrganizedNodes(pollResults).getChildren().entrySet().stream()
-                        .map(vassal -> vassal.getValue().getChildren().size()).peek(System.out::println)
+                tree.getOrganizedNodes(pollResults).getChildren().values().stream()
+                        .map(node -> node.getChildren().size()).peek(System.out::println)
                         .max(Comparator.naturalOrder()).get();
         assertTrue(tree.getOrganizedNodes(pollResults).amountOfChildren() > maxSubvassals, "King is looser");
     }
